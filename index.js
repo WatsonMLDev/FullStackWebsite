@@ -18,7 +18,7 @@ function serverCall(){
                 return;
             }
             let newP = document.createElement("p");
-            newP.appendChild(document.createTextNode(this.response + " Error"));
+            newP.appendChild(document.createTextNode(this.response));
             div.appendChild(newP);
         }
     }
@@ -35,7 +35,7 @@ function serverCall(){
             }
 
             let newP = document.createElement("p");
-            newP.appendChild(document.createTextNode(this.response + " Warning"));
+            newP.appendChild(document.createTextNode(this.response));
             div.appendChild(newP);
         }
     }

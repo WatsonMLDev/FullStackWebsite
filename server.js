@@ -7,12 +7,13 @@ function logToFile(res, data) {
     fs.appendFile("logs.txt", data + "\n", (error) => {
         if (error) {
             res.statusCode = 500;
-            res.write("Server error when logging to file");
+            console.log(error);
+            res.write(`Server error when logging to file: ${error}`);
             res.end();
             return;
         }
-        console.log("Appended to file")
-        res.write("Logged");
+        console.log(`Appended "${data}" to file`)
+        res.write(`Logged: ${data}`);
         res.end();
     })
 }
@@ -22,10 +23,12 @@ function getErrorOrWarningOrAll(res, selection){
         if (error) {
             res.statusCode = 500;
             if (error.code === "ENOENT"){
+                console.log(`File not found: ${error}`);
                 res.write(`File not found`);
                 res.end();
                 return;
             }
+            console.log(`Server error when reading file: ${error}`);
             res.write("Server error when reading file");
             res.end();
             return;
@@ -37,6 +40,7 @@ function getErrorOrWarningOrAll(res, selection){
                 if (line.includes("Error")) res.write(line + "\n");
             })
             res.end();
+            console.log("Sent errors");
             return;
         }
         else if (1 === selection){
@@ -44,10 +48,12 @@ function getErrorOrWarningOrAll(res, selection){
                 if (line.includes("Warning")) res.write(line + "\n");
             })
             res.end();
+            console.log("Sent warnings");
             return;
         }
         res.write(data);
         res.end();
+        console.log("Sent all errors and warnings");
     });
 }
 
@@ -80,6 +86,7 @@ const server = http.createServer((req, res) => {
                 res.statusCode = 404;
                 res.write("Resource not available");
                 res.end();
+                console.log("Invalid request received");
             }
 
         }
@@ -87,6 +94,7 @@ const server = http.createServer((req, res) => {
             res.statusCode = 500;
             res.write("Error occurred");
             res.end();
+            console.log(`Error occurred: ${e}`);
         }
 
     }
