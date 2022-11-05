@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoggingGUI</title>
+</head>
+    <body>
+    <label for="select">Select command to run: </label><select id="select">
+            <option selected disabled hidden>Choose here!</option>
+            <option value="1">Log an error</option>
+            <option value="2">Log a warning</option>
+            <option value="3">View errors</option>
+            <option value="4">View warnings</option>
+            <option value="5">View all log entries</option>
+            <option value="6">Send Invalid request</option>
+        </select>
+        <button id="button" onclick="serverCall();">Submit</button>
+        <div id="result"></div>
+        <script src="index.js" defer></script>
+    </body>
+</html>

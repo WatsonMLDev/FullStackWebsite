@@ -59,11 +59,12 @@ const server = http.createServer((req, res) => {
 
         const {method, url} = req;
         res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Access-Control-Allow-Origin', '*');
         try{
-            if(url === '/log_error' && method === 'GET') {
+            if(url === '/log_error' && method === 'POST') {
                 logToFile(res, "Error occurred at: " + Date());
             }
-            else if (url === '/log_warning' && method === 'GET') {
+            else if (url === '/log_warning' && method === 'POST') {
                 logToFile(res, "Warning occurred at: " + Date());
             }
             else if(url === '/errors' && method === 'GET') {
@@ -77,7 +78,7 @@ const server = http.createServer((req, res) => {
             }
             else {
                 res.statusCode = 404;
-                res.write("Invalid request");
+                res.write("Resource not available");
                 res.end();
             }
 
